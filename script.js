@@ -24,22 +24,35 @@ const dec = buttons[18];
 const equal = buttons[19];
 
 let enteredNumber = "0";
+let decimalMode = false;
 
 for(i = 0; i<numbers.length; i++) {
     numbers[i].addEventListener("click", function(event) {
         enteredNumber = enteredNumber + event.target.innerHTML;
-        screen.innerHTML = parseInt(enteredNumber);
+        screen.innerHTML = parseFloat(enteredNumber);
+        console.log(enteredNumber);
+        console.log(parseFloat(enteredNumber));
     });
+
 }
 
 clear.addEventListener("click", function(event) {
     enteredNumber = 0;
-    screen.innerHTML = parseInt(enteredNumber);
+    screen.innerHTML = parseFloat(enteredNumber);
 })
 
 del.addEventListener("click", function(event){
     if(enteredNumber.length>1) {
         enteredNumber = enteredNumber.substring(0, enteredNumber.length - 1);
     }
-    screen.innerHTML = parseInt(enteredNumber);
+    screen.innerHTML = parseFloat(enteredNumber);
+})
+
+dec.addEventListener("click", function(event){
+
+    if(decimalMode == false) { 
+        enteredNumber = enteredNumber + event.target.innerHTML;
+        screen.innerHTML = parseFloat(enteredNumber);
+    }
+    decimalMode = true;
 })
