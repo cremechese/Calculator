@@ -24,7 +24,14 @@ const dec = buttons[18];
 const equal = buttons[19];
 
 let enteredNumber = "0";
+let secondInput = "0";
 let decimalMode = false;
+let addMode = false;
+let subMode = false;
+let multMode = false;
+let divMode = false;
+let firstPass = false;
+let firstInput = "0";
 
 for(i = 0; i<numbers.length; i++) {
     numbers[i].addEventListener("click", function(event) {
@@ -37,7 +44,9 @@ for(i = 0; i<numbers.length; i++) {
 }
 
 clear.addEventListener("click", function(event) {
-    enteredNumber = 0;
+    enteredNumber = "0";
+    firstInput = "0";
+    secondInput = "0";
     screen.innerHTML = parseFloat(enteredNumber);
 })
 
@@ -46,6 +55,7 @@ del.addEventListener("click", function(event){
         enteredNumber = enteredNumber.substring(0, enteredNumber.length - 1);
     }
     screen.innerHTML = parseFloat(enteredNumber);
+    console.log(enteredNumber);
 })
 
 dec.addEventListener("click", function(event){
@@ -56,3 +66,30 @@ dec.addEventListener("click", function(event){
     }
     decimalMode = true;
 })
+
+add.addEventListener("click", function(event){
+    firstInput = enteredNumber;
+    enteredNumber = "0";
+    addMode = true;
+    firstPass = true;
+    subMode = false;
+    multMode = false;
+    divMode = false;
+})
+
+equal.addEventListener("click", function(event){
+    if (addMode == true){
+        if(firstPass == true){
+            secondInput = enteredNumber;
+            enteredNumber = firstInput;
+        }
+        firstPass = false;
+        enteredNumber = addition(parseFloat(enteredNumber),parseFloat(secondInput));
+    }
+    screen.innerHTML = parseFloat(enteredNumber);
+})
+
+
+function addition(x, y) {
+    return Math.round((x+y)*10000)/10000;
+}
