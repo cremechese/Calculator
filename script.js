@@ -36,3 +36,10 @@ clear.addEventListener("click", function(event) {
     enteredNumber = 0;
     screen.innerHTML = parseInt(enteredNumber);
 })
+
+del.addEventListener("click", function(event){
+    if(enteredNumber.length>1) {
+        enteredNumber = enteredNumber.substring(0, enteredNumber.length - 1);
+    }
+    screen.innerHTML = parseInt(enteredNumber);
+})
