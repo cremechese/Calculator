@@ -25,6 +25,7 @@ const equal = buttons[19];
 
 let enteredNumber = "0";
 let secondInput = "0";
+let operator = 0;
 let decimalMode = false;
 let addMode = false;
 let subMode = false;
@@ -37,8 +38,6 @@ for(i = 0; i<numbers.length; i++) {
     numbers[i].addEventListener("click", function(event) {
         enteredNumber = enteredNumber + event.target.innerHTML;
         screen.innerHTML = parseFloat(enteredNumber);
-        console.log(enteredNumber);
-        console.log(parseFloat(enteredNumber));
     });
 
 }
@@ -47,6 +46,7 @@ clear.addEventListener("click", function(event) {
     enteredNumber = "0";
     firstInput = "0";
     secondInput = "0";
+    operator = 0;
     screen.innerHTML = parseFloat(enteredNumber);
 })
 
@@ -68,28 +68,121 @@ dec.addEventListener("click", function(event){
 })
 
 add.addEventListener("click", function(event){
-    firstInput = enteredNumber;
-    enteredNumber = "0";
-    addMode = true;
-    firstPass = true;
-    subMode = false;
-    multMode = false;
-    divMode = false;
-})
-
-equal.addEventListener("click", function(event){
-    if (addMode == true){
+    if (operator){
         if(firstPass == true){
             secondInput = enteredNumber;
             enteredNumber = firstInput;
         }
         firstPass = false;
-        enteredNumber = addition(parseFloat(enteredNumber),parseFloat(secondInput));
+        enteredNumber = operate(operator, parseFloat(enteredNumber), parseFloat(secondInput));
+    }
+    screen.innerHTML = parseFloat(enteredNumber);
+    firstInput = enteredNumber
+    enteredNumber = "0";
+    operator = 1;
+    firstPass = true;
+})
+
+sub.addEventListener("click", function(event) {
+    if (operator){
+        if(firstPass == true){
+            secondInput = enteredNumber;
+            enteredNumber = firstInput;
+        }
+        firstPass = false;
+        enteredNumber = operate(operator, parseFloat(enteredNumber), parseFloat(secondInput));
+    }
+    screen.innerHTML = parseFloat(enteredNumber);
+    firstInput = enteredNumber
+    enteredNumber = "0";
+    operator = 2;
+    firstPass = true;
+})
+
+mult.addEventListener("click", function(event) {
+    if (operator){
+        if(firstPass == true){
+            secondInput = enteredNumber;
+            enteredNumber = firstInput;
+        }
+        firstPass = false;
+        enteredNumber = operate(operator, parseFloat(enteredNumber), parseFloat(secondInput));
+    }
+    screen.innerHTML = parseFloat(enteredNumber);
+    firstInput = enteredNumber
+    enteredNumber = "0";
+    operator = 3;
+    firstPass = true;
+})
+
+div.addEventListener("click", function(event) {
+    if (operator){
+        if(firstPass == true){
+            secondInput = enteredNumber;
+            enteredNumber = firstInput;
+        }
+        firstPass = false;
+        enteredNumber = operate(operator, parseFloat(enteredNumber), parseFloat(secondInput));
+    }
+    screen.innerHTML = parseFloat(enteredNumber);
+    firstInput = enteredNumber
+    enteredNumber = "0";
+    operator = 4;
+    firstPass = true;
+})
+
+signChange.addEventListener("click", function(event) {
+    enteredNumber = operate(3, parseFloat(enteredNumber), -1);
+    screen.innerHTML = parseFloat(enteredNumber);
+})
+
+percent.addEventListener("click", function(event) {
+    enteredNumber = operate(4, parseFloat(enteredNumber), 100);
+    screen.innerHTML = parseFloat(enteredNumber);
+})
+
+equal.addEventListener("click", function(event){
+    if (operator){
+        if(firstPass == true){
+            secondInput = enteredNumber;
+            enteredNumber = firstInput;
+        }
+        firstPass = false;
+        enteredNumber = operate(operator, parseFloat(enteredNumber), parseFloat(secondInput));
     }
     screen.innerHTML = parseFloat(enteredNumber);
 })
 
-
 function addition(x, y) {
     return Math.round((x+y)*10000)/10000;
+}
+
+function subtraction(x, y) {
+    return Math.round((x-y)*10000)/10000;
+}
+
+function multiplication(x, y) {
+    return Math.round((x*y)*10000)/10000;
+}
+
+function division(x, y) {
+    if(y !== 0) {
+        return Math.round((x/y)*10000)/10000;
+    } else {
+        return "Div by 0 Error";
+    }
+}
+
+function operate(operator, x, y) {
+    if (operator == 1) {
+        return addition(x,y);
+    } else if (operator == 2) {
+        return subtraction(x,y);
+    } else if (operator == 3) {
+        return multiplication(x, y);
+    } else if (operator == 4) {
+        return division(x,y);
+    } else {
+        console.log("No operator selected, potential error");
+    }
 }
